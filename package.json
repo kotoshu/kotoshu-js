@@ -1,0 +1,41 @@
+{
+  "name": "@kotoshu/client",
+  "version": "0.1.0",
+  "description": "JavaScript / TypeScript client for the Kotoshu HTTP spell-check API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test --experimental-vm-modules dist/test/smoke.test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "spell-check",
+    "spellchecker",
+    "hunspell",
+    "kotoshu",
+    "language"
+  ],
+  "license": "BSD-2-Clause",
+  "author": "Ribose Inc. <open.source@ribose.com>",
+  "homepage": "https://github.com/kotoshu/kotoshu-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kotoshu/kotoshu-js.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43"
+  }
+}
