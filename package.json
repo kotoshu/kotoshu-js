@@ -32,10 +32,9 @@
   "engines": {
     "node": ">=18"
   },
-  "dependencies": {
-    "typescript": "^5.9.3"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/node": "^20.19.43"
+    "@types/node": "^20.19.43",
+    "typescript": "^5.9.3"
   }
 }
