@@ -2,7 +2,7 @@ name: Release npm (@kotoshu/client)
 
 # Trusted publishing: keyless OIDC. Requires the owner-side registration
 # on npmjs.com — package @kotoshu/client → Settings → Trusted Publishing:
-#   Repository: kotoshu/kotoshu-js | Workflow: release.yml | Environment: npm
+#   Repository: kotoshu/kotoshu-js | Workflow: release.yml (no environment)
 
 on:
   workflow_dispatch:
@@ -20,7 +20,6 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: npm
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
