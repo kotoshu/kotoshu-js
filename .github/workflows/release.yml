@@ -1,0 +1,37 @@
+name: Release npm (@kotoshu/client)
+
+# Trusted publishing: keyless OIDC. Requires the owner-side registration
+# on npmjs.com — package @kotoshu/client → Settings → Trusted Publishing:
+#   Repository: kotoshu/kotoshu-js | Workflow: release.yml | Environment: npm
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write # the OIDC token that replaces the npm token
+
+concurrency:
+  group: release-npm
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run build
+      - name: Offline tests (server-dependent smoke excluded)
+        run: node --test --experimental-vm-modules dist/test/wasm.test.js
+      - name: Publish with provenance
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: "" # explicit: trusted publishing only, no token
