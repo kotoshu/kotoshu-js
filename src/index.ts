@@ -75,6 +75,11 @@ export class Client {
     return this.get<Health>("/v1/health");
   }
 
+  /** Server, engine, and Ruby versions (`GET /v1/version`). */
+  version(): Promise<{ server: string; kotoshu: string; ruby: string }> {
+    return this.get("/v1/version");
+  }
+
   async languages(): Promise<string[]> {
     const resp = await this.get<{ cached: string[] }>("/v1/languages");
     return resp.cached ?? [];

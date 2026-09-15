@@ -67,4 +67,8 @@ describe("kotoshu-js client", async () => {
       KotoshuError,
     );
   });
+  it("reports server and engine versions", async () => {
+    const info = await client.version();
+    assert.ok(info.kotoshu.startsWith("1."));
+  });
 });
