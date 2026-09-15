@@ -11,13 +11,26 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
           cache: npm
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+      - name: Server under test
+        run: |
+          gem install kotoshu-server --no-document
+          kotoshu setup en
+          nohup kotoshu-server >/tmp/server.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:9292/v1/health >/dev/null 2>&1 && { echo "server up"; exit 0; }
+            sleep 1
+          done
+          echo "server never became healthy" >&2; exit 1
       - run: npm ci
       - run: npm run build
       - run: npm test
